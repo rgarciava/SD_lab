@@ -3,24 +3,24 @@ import java.util.Random;
 public class Cristian {
 
     static class Clock {
-        private long time;
+        private int time;
 
-        public Clock(long time) {
+        public Clock(int time) {
             this.time = time;
         }
 
-        public synchronized long getTime() {
+        public synchronized int getTime() {
             return time;
         }
 
-        public synchronized void setTime(long time) {
+        public synchronized void setTime(int time) {
             this.time = time;
         }
     }
 
     static class TimeServer {
-        public long getTime() {
-            return System.currentTimeMillis();
+        public int getTime() {
+            return 100;
         }
     }
 
@@ -34,21 +34,15 @@ public class Cristian {
             this.server = server;
         }
 
-        @Override
         public void run() {
             try {
-                long t0 = System.currentTimeMillis();
-
-                Thread.sleep(rand.nextInt(100));
-
-                long serverTime = server.getTime();
-
-                Thread.sleep(rand.nextInt(100));
-
-                long t1 = System.currentTimeMillis();
-                long rtt = t1 - t0;
-
-                long newTime = serverTime + (rtt / 2);
+                int t0 = rand.nextInt(10);
+                Thread.sleep(rand.nextInt(50));
+                int serverTime = server.getTime();
+                Thread.sleep(rand.nextInt(50));
+                int t1 = t0 + rand.nextInt(10);
+                int rtt = t1 - t0;
+                int newTime = serverTime + (rtt / 2);
 
                 System.out.println("Cliente " + getId());
                 System.out.println("Antes: " + clock.getTime());
@@ -63,11 +57,10 @@ public class Cristian {
     }
 
     public static void main(String[] args) {
-
         TimeServer server = new TimeServer();
 
         for (int i = 0; i < 5; i++) {
-            Clock clock = new Clock(System.currentTimeMillis() + (int)(Math.random() * 1000));
+            Clock clock = new Clock((int)(Math.random() * 50));
             new Client(clock, server).start();
         }
     }
