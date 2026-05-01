@@ -2,7 +2,6 @@ import java.util.Random;
 
 public class Cristian {
 
-    // Reloj del cliente
     static class Clock {
         private long time;
 
@@ -19,14 +18,12 @@ public class Cristian {
         }
     }
 
-    // Servidor de tiempo
     static class TimeServer {
         public long getTime() {
             return System.currentTimeMillis();
         }
     }
 
-    // Cliente (nodo)
     static class Client extends Thread {
         private Clock clock;
         private TimeServer server;
@@ -42,12 +39,10 @@ public class Cristian {
             try {
                 long t0 = System.currentTimeMillis();
 
-                // Simula latencia de red (ida)
                 Thread.sleep(rand.nextInt(100));
 
                 long serverTime = server.getTime();
 
-                // Simula latencia de red (vuelta)
                 Thread.sleep(rand.nextInt(100));
 
                 long t1 = System.currentTimeMillis();
